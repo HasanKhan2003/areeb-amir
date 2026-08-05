@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Areeb Amir — Technical Recruiter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0e1a;
+    --panel: #121a30;
+    --panel-alt: #0e1425;
+    --line: rgba(236,239,249,0.09);
+    --text: #ecf0f9;
+    --muted: #8891a8;
+    --indigo: #5b6ef5;
+    --violet: #a855e8;
+    --pink: #ea5aa0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
+
+  /* ambient beams echoing the hero photo's lighting */
+  .beams{
+    position:fixed; inset:0; z-index:-1; opacity:0.5;
+    background:
+      radial-gradient(ellipse 700px 500px at 15% 0%, rgba(91,110,245,0.20), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 85% 15%, rgba(234,90,160,0.16), transparent 60%),
+      radial-gradient(ellipse 500px 600px at 50% 100%, rgba(168,85,232,0.14), transparent 60%);
+  }
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Nav / CTA row ---------- */
+  header.top{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter: blur(10px);
+    background:rgba(10,14,26,0.7);
+    border-bottom:1px solid var(--line);
+  }
+  header.top .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .brand{font-family:'Space Grotesk'; font-weight:600; font-size:15px; letter-spacing:0.02em;}
+  .brand span{color:var(--indigo);}
+  .nav-cta{display:flex; gap:10px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 18px; border-radius:999px;
+    font-size:13px; font-weight:500; text-decoration:none;
+    border:1px solid var(--line);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--indigo), var(--violet));
+    color:#fff; border:none;
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{color:var(--text); background:rgba(255,255,255,0.03);}
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.3);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:76px 0 60px;}
+  .hero-grid{
+    display:grid; grid-template-columns:200px 1fr; gap:40px; align-items:center;
+  }
+  .photo-frame{
+    position:relative; width:200px; height:200px; border-radius:50%;
+    padding:3px;
+    background:conic-gradient(from 200deg, var(--indigo), var(--violet), var(--pink), var(--indigo));
+  }
+  .photo-frame img{
+    width:100%; height:100%; border-radius:50%; object-fit:cover;
+    display:block; border:4px solid var(--bg);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--indigo); margin-bottom:14px; display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--indigo); box-shadow:0 0 10px var(--indigo); display:inline-block;}
+  .hero h1{font-size:44px; font-weight:700; letter-spacing:-0.01em; line-height:1.08; margin-bottom:14px;}
+  .hero .headline{color:var(--muted); font-size:16px; max-width:520px; margin-bottom:26px;}
+  .hero .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+
+  @media (max-width:640px){
+    .hero-grid{grid-template-columns:1fr; text-align:center; justify-items:center;}
+    .hero .headline{margin-left:auto; margin-right:auto;}
+    .hero .cta-row{justify-content:center;}
+  }
+
+  /* ---------- Section shells ---------- */
+  section{padding:64px 0; border-top:1px solid var(--line);}
+  .section-head{margin-bottom:32px;}
+  .section-tag{
+    font-family:'IBM Plex Mono'; font-size:12px; color:var(--indigo);
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;
+  }
+  .section-title{font-size:26px; font-weight:600;}
+
+  /* ---------- About ---------- */
+  .about-text{font-size:17px; color:#cdd2e3; max-width:680px;}
+
+  /* ---------- Skills ---------- */
+  .skills-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  .skill-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:20px 18px; transition:border-color .2s ease, transform .2s ease;
+  }
+  .skill-card:hover{border-color:rgba(91,110,245,0.5); transform:translateY(-3px);}
+  .skill-card .num{font-family:'IBM Plex Mono'; font-size:11px; color:var(--violet); margin-bottom:10px;}
+  .skill-card h3{font-size:15px; font-weight:600; margin-bottom:6px;}
+  .skill-card p{font-size:13px; color:var(--muted); line-height:1.5;}
+  @media (max-width:720px){ .skills-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- Pipeline signature strip ---------- */
+  .pipeline{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel-alt); border:1px solid var(--line); border-radius:16px;
+    padding:22px 26px; margin-bottom:40px; overflow-x:auto; gap:6px;
+  }
+  .pipeline-step{display:flex; align-items:center; gap:10px; flex:1; min-width:110px;}
+  .pipeline-step .dot{
+    width:9px; height:9px; border-radius:50%; background:var(--indigo);
+    box-shadow:0 0 12px var(--indigo); flex-shrink:0;
+  }
+  .pipeline-step:nth-child(3) .dot{background:var(--violet); box-shadow:0 0 12px var(--violet);}
+  .pipeline-step:nth-child(5) .dot{background:var(--pink); box-shadow:0 0 12px var(--pink);}
+  .pipeline-step span{font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted); white-space:nowrap;}
+  .pipeline-line{flex:1; height:1px; background:var(--line); min-width:14px;}
+
+  /* ---------- Experience ---------- */
+  .job{
+    display:grid; grid-template-columns:150px 1fr; gap:28px;
+    padding:26px 0; border-top:1px solid var(--line);
+  }
+  .job:first-of-type{border-top:none;}
+  .job-meta{font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted); line-height:1.7;}
+  .job-meta .dur{color:var(--indigo);}
+  .job-role{font-size:18px; font-weight:600; margin-bottom:2px;}
+  .job-company{font-size:14px; color:var(--violet); margin-bottom:14px; font-weight:500;}
+  .job-bullets{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .job-bullets li{
+    font-size:14.5px; color:#c4c9db; padding-left:20px; position:relative; line-height:1.55;
+  }
+  .job-bullets li::before{
+    content:'→'; position:absolute; left:0; color:var(--indigo); font-size:13px; top:1px;
+  }
+  @media (max-width:640px){ .job{grid-template-columns:1fr;} .job-meta{display:flex; gap:10px; flex-wrap:wrap;} }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    text-align:center; padding:80px 0 90px; border-top:1px solid var(--line);
+  }
+  .contact h2{font-size:30px; margin-bottom:12px;}
+  .contact p{color:var(--muted); max-width:460px; margin:0 auto 30px;}
+  .contact .cta-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+  footer{text-align:center; padding:26px 0 40px; font-size:12px; color:#4d5570; font-family:'IBM Plex Mono';}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .btn, .skill-card{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="beams"></div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand" style="display:flex; align-items:center; gap:10px;">
+      <img src="areeb_amir.png" alt="Areeb Amir" style="width:32px; height:32px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(91,110,245,0.6);">
+      AREEB <span>AMIR</span>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/areeb-amir-hrpod/" target="_blank" rel="noopener">View LinkedIn</a>
+      <a class="btn btn-primary" href="mailto:areebxyz28@gmail.com">Email Me</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="hero-grid">
+      <div class="photo-frame">
+        <img src="areeb_amir.png" alt="Areeb Amir">
+      </div>
+      <div>
+        <div class="eyebrow">Open to technical hiring conversations</div>
+        <h1>Areeb Amir</h1>
+        <p class="headline">Associate Technical Recruiter @ HR POD — Tech Hiring · Global Recruitment · Sourcing · Talent Acquisition. Connecting top talent with great companies.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.linkedin.com/in/areeb-amir-hrpod/" target="_blank" rel="noopener">View LinkedIn</a>
+          <a class="btn btn-ghost" href="mailto:areebxyz28@gmail.com">Email Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head">
+      <div class="section-tag">Summary</div>
+      <h2 class="section-title">Full-cycle technical recruitment, done right</h2>
+    </div>
+    <p class="about-text">Associate Technical Recruiter with hands-on experience managing end-to-end hiring across Engineering, AI/ML, Data, and Business functions. Skilled in talent sourcing, candidate screening, stakeholder management, ATS workflows, interview coordination, and offer management. Adept at handling multiple hiring priorities while ensuring a seamless recruitment experience for both candidates and hiring managers.</p>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <div class="section-tag">Top Skills</div>
+      <h2 class="section-title">Where I add the most value</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="num">01</div>
+        <h3>Tech Hiring</h3>
+        <p>End-to-end recruitment for Engineering, AI/ML, and Data roles.</p>
+      </div>
+      <div class="skill-card">
+        <div class="num">02</div>
+        <h3>Global Recruitment</h3>
+        <p>Sourcing and closing talent across markets and time zones.</p>
+      </div>
+      <div class="skill-card">
+        <div class="num">03</div>
+        <h3>Sourcing</h3>
+        <p>Building strong pipelines via LinkedIn, job boards, and referrals.</p>
+      </div>
+      <div class="skill-card">
+        <div class="num">04</div>
+        <h3>Communication</h3>
+        <p>Clear, timely updates that keep candidates and clients aligned.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <div class="section-tag">Experience</div>
+      <h2 class="section-title">How a role moves through my desk</h2>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipeline-step"><span class="dot"></span><span>SOURCE</span></div>
+      <div class="pipeline-line"></div>
+      <div class="pipeline-step"><span class="dot"></span><span>SCREEN</span></div>
+      <div class="pipeline-line"></div>
+      <div class="pipeline-step"><span class="dot"></span><span>INTERVIEW</span></div>
+      <div class="pipeline-line"></div>
+      <div class="pipeline-step"><span class="dot"></span><span>OFFER</span></div>
+      <div class="pipeline-line"></div>
+      <div class="pipeline-step"><span class="dot"></span><span>ONBOARD</span></div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        Jul 2026 — Present<br><span class="dur">2 mos</span>
+      </div>
+      <div>
+        <div class="job-role">Associate Technical Recruiter</div>
+        <div class="job-company">HR POD</div>
+        <ul class="job-bullets">
+          <li>Manage the full-cycle technical recruitment process, from requirement gathering to candidate onboarding.</li>
+          <li>Partner with clients and hiring managers to understand hiring needs and develop effective recruitment strategies.</li>
+          <li>Source, screen, and engage high-quality technical talent through LinkedIn, job boards, referrals, and professional networks.</li>
+          <li>Conduct initial candidate assessments to evaluate technical expertise, communication skills, and cultural fit.</li>
+          <li>Coordinate interview schedules, maintain seamless candidate communication, and ensure a positive hiring experience.</li>
+          <li>Maintain accurate candidate records and recruitment pipelines using Applicant Tracking Systems (ATS).</li>
+          <li>Build strong relationships with candidates by providing timely updates, interview feedback, and onboarding support.</li>
+          <li>Share regular recruitment progress, hiring insights, and market trends with clients and internal stakeholders.</li>
+          <li>Successfully manage multiple technical positions simultaneously while ensuring quality, efficiency, and timely closures.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        Apr 2026 — Jun 2026<br><span class="dur">3 mos</span>
+      </div>
+      <div>
+        <div class="job-role">Recruiter</div>
+        <div class="job-company">MTO HR</div>
+        <ul class="job-bullets">
+          <li>Managed end-to-end recruitment activities for technical and non-technical positions.</li>
+          <li>Conducted candidate sourcing through LinkedIn Recruiter, LinkedIn Outreach, job boards, and referrals.</li>
+          <li>Screened resumes and conducted initial candidate assessments.</li>
+          <li>Coordinated interviews between candidates and hiring managers.</li>
+          <li>Maintained candidate databases and talent pipelines for future hiring needs.</li>
+          <li>Assisted in hiring for Software Engineering, Operations, HR, and Business Development roles.</li>
+          <li>Ensured positive candidate experience throughout the recruitment process.</li>
+          <li>Collaborated with internal stakeholders to understand hiring requirements and recruitment strategies.</li>
+          <li>Contributed to employer branding and recruitment marketing initiatives.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        Sep 2025 — Feb 2026<br><span class="dur">6 mos</span><br>Remote
+      </div>
+      <div>
+        <div class="job-role">Annotator</div>
+        <div class="job-company">Turing · Full-time</div>
+        <ul class="job-bullets">
+          <li>Annotated real-world and gameplay videos with high accuracy to create structured datasets for AI training.</li>
+          <li>Helped AI systems learn to perceive, interpret, and respond to human actions and environmental interactions.</li>
+          <li>Analyzed complex video sequences and labeled objects, movements, behaviors, and key events with precision.</li>
+          <li>Maintained strict quality standards to ensure data consistency, accuracy, and reliability.</li>
+          <li>Contributed to the development of advanced AI models in computer vision, autonomous systems, and intelligent automation.</li>
+          <li>Transformed raw visual data into meaningful insights that improve machine understanding and decision-making.</li>
+          <li>Collaborated within fast-paced annotation workflows while meeting project deadlines and performance targets.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <div class="section-tag">Education</div>
+      <h2 class="section-title">Where the foundation was built</h2>
+    </div>
+    <div class="job" style="grid-template-columns:150px 1fr;">
+      <div class="job-meta">BBA</div>
+      <div>
+        <div class="job-role">Bachelor of Business Administration</div>
+        <div class="job-company">Specialized in Human Resource Management (HRM)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" style="border-top:1px solid var(--line);">
+    <h2>Let's Connect!</h2>
+    <p>Hiring for a technical role, or exploring new opportunities in recruitment? Always happy to talk.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://www.linkedin.com/in/areeb-amir-hrpod/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      <a class="btn btn-ghost" href="mailto:areebxyz28@gmail.com">areebxyz28@gmail.com</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>Areeb Amir — Built for HR POD hiring conversations</footer>
+
+</body>
+</html>
