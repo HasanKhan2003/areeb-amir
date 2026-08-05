@@ -32,25 +32,67 @@
   .mono{font-family:'IBM Plex Mono', monospace;}
   h1,h2,h3{font-family:'Space Grotesk', sans-serif;}
 
-  /* fancy, multi-layered ambient background with glowing mesh & grid vibes */
+  /* fancy, multi-layered ambient background with animated glowing mesh */
   .beams{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
-    background:
-      radial-gradient(circle 800px at 10% -10%, rgba(91,110,245,0.18), transparent 60%),
-      radial-gradient(circle 700px at 90% 20%, rgba(234,90,160,0.12), transparent 60%),
-      radial-gradient(circle 900px at 50% 90%, rgba(168,85,232,0.15), transparent 70%),
-      radial-gradient(circle 500px at 80% 80%, rgba(91,110,245,0.1), transparent 50%),
-      linear-gradient(to bottom, #070913, #04060d);
+    background: #070913;
+    overflow: hidden;
   }
   
-  /* subtle digital grid overlay */
+  .beams::before, .beams::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: float-blob 20s infinite alternate ease-in-out;
+  }
+  
+  .beams::before {
+    width: 60vw; height: 60vh;
+    background: radial-gradient(circle, rgba(91,110,245,0.3), transparent 70%);
+    top: -10%; left: -10%;
+  }
+  
+  .beams::after {
+    width: 60vw; height: 60vh;
+    background: radial-gradient(circle, rgba(234,90,160,0.22), transparent 70%);
+    bottom: -15%; right: -10%;
+    animation-delay: -7s;
+    animation-duration: 25s;
+  }
+
+  /* subtle digital grid overlay with breathing animation and violet orb */
   .bg-grid {
-    position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.25;
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background-image: 
-      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 90%);
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 80%);
+    animation: breathe 12s infinite alternate ease-in-out;
+  }
+  
+  .bg-grid::before {
+    content: "";
+    position: absolute;
+    width: 55vw; height: 55vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,85,232,0.22), transparent 70%);
+    filter: blur(110px);
+    top: 25%; left: 20%;
+    animation: float-blob 22s infinite alternate-reverse ease-in-out;
+    z-index: -1;
+  }
+
+  @keyframes float-blob {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(8%, 12%) scale(1.1); }
+    100% { transform: translate(-5%, 8%) scale(0.95); }
+  }
+
+  @keyframes breathe {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.55; transform: scale(1.05); }
   }
 
   /* expanded max-width with comfortable minimal padding for larger screens */
@@ -64,7 +106,8 @@
   header.top{
     position:sticky; top:0; z-index:10;
     backdrop-filter: blur(12px);
-    background:rgba(7,9,19,0.75);
+    -webkit-backdrop-filter: blur(12px);
+    background:rgba(7,9,19,0.65);
     border-bottom:1px solid var(--line);
   }
   header.top .wrap{
@@ -136,7 +179,8 @@
   /* ---------- Skills ---------- */
   .skills-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
   .skill-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    background:rgba(17, 23, 42, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border:1px solid var(--line); border-radius:16px;
     padding:24px 20px; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
   }
   .skill-card:hover{border-color:rgba(91,110,245,0.5); transform:translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
@@ -149,7 +193,8 @@
   /* ---------- Pipeline signature strip ---------- */
   .pipeline{
     display:flex; align-items:center; justify-content:space-between;
-    background:var(--panel-alt); border:1px solid var(--line); border-radius:16px;
+    background:rgba(10, 14, 28, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border:1px solid var(--line); border-radius:16px;
     padding:24px 30px; margin-bottom:40px; overflow-x:auto; gap:6px;
   }
   .pipeline-step{display:flex; align-items:center; gap:10px; flex:1; min-width:110px;}
@@ -192,7 +237,9 @@
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .btn, .skill-card{transition:none;}
+    .btn, .skill-card, .beams::before, .beams::after, .bg-grid, .bg-grid::before{
+      transition:none; animation:none;
+    }
   }
 </style>
 </head>
