@@ -486,7 +486,7 @@
     <div class="jobs-wrapper">
       <div class="job">
         <div class="job-meta">
-          Jul 2026 — Present<br><span class="dur">2 mos</span>
+          Jul 2026 — Present<br><span class="dur dynamic-dur" data-start="2026-07" data-end="present">2 mos</span>
         </div>
         <div>
           <div class="job-role">Associate Technical Recruiter</div>
@@ -507,7 +507,7 @@
 
       <div class="job">
         <div class="job-meta">
-          Apr 2026 — Jun 2026<br><span class="dur">3 mos</span>
+          Apr 2026 — Jun 2026<br><span class="dur dynamic-dur" data-start="2026-04" data-end="2026-06">3 mos</span>
         </div>
         <div>
           <div class="job-role">MTO HR</div>
@@ -528,11 +528,11 @@
 
       <div class="job">
         <div class="job-meta">
-          Sep 2025 — Feb 2026<br><span class="dur">6 mos</span><br>Remote
+          Sep 2025 — Feb 2026<br><span class="dur dynamic-dur" data-start="2025-09" data-end="2026-02">6 mos</span><br>Remote
         </div>
         <div>
           <div class="job-role">Annotator</div>
-          <div class="job-company">Turing · Full-time</div>
+          <div class="job-company">Turing</div>
           <ul class="job-bullets">
             <li>Annotated real-world and gameplay videos with high accuracy to create structured datasets for AI training.</li>
             <li>Helped AI systems learn to perceive, interpret, and respond to human actions and environmental interactions.</li>
@@ -577,6 +577,55 @@
 </main>
 
 <footer>Areeb Amir — Built for HR POD hiring conversations</footer>
+
+<!-- Script to automatically calculate and render job durations -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const durElements = document.querySelectorAll('.dynamic-dur');
+    
+    durElements.forEach(el => {
+      const startStr = el.getAttribute('data-start');
+      const endStr = el.getAttribute('data-end');
+      
+      if (!startStr || !endStr) return;
+      
+      const startDate = new Date(startStr);
+      let endDate;
+      
+      if (endStr.toLowerCase() === 'present') {
+        endDate = new Date(); // Gets the current date
+      } else {
+        endDate = new Date(endStr);
+      }
+      
+      // Calculate the difference in total months
+      let totalMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+      totalMonths -= startDate.getMonth();
+      totalMonths += endDate.getMonth();
+      
+      // Inclusive math (e.g., matching July to July as 1 month, July to August as 2 months)
+      totalMonths += 1;
+      
+      if (totalMonths <= 0) {
+        el.textContent = '0 mos';
+        return;
+      }
+      
+      const years = Math.floor(totalMonths / 12);
+      const remainingMonths = totalMonths % 12;
+      
+      let durationText = '';
+      if (years > 0) {
+        durationText += years === 1 ? '1 yr ' : years + ' yrs ';
+      }
+      if (remainingMonths > 0) {
+        durationText += remainingMonths === 1 ? '1 mo' : remainingMonths + ' mos';
+      }
+      
+      el.textContent = durationText.trim();
+    });
+  });
+</script>
 
 </body>
 </html>
