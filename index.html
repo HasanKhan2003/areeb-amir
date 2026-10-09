@@ -115,25 +115,40 @@ footer{padding:36px 0;font-size:13px;color:var(--muted)}footer .wrap{display:fle
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none}}
 
 /* ============================================================
-   LIQUID GLASS
-   Applies to: buttons, tags, chips, expertise cards,
-   process circles, education card, CTA band buttons.
+   FIXED GRADIENT BACKGROUND (dark areas only)
+   The gradient stays put while content scrolls over it, so the
+   glass elements pick up different colours as you scroll.
+   White sections keep their solid white background.
+   ============================================================ */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(45% 40% at 88% 8%,rgba(190,30,42,.70),transparent 70%),
+    radial-gradient(38% 38% at 8% 38%,rgba(229,86,95,.38),transparent 70%),
+    radial-gradient(34% 34% at 50% 62%,rgba(120,18,28,.55),transparent 70%),
+    radial-gradient(50% 45% at 85% 95%,rgba(190,30,42,.55),transparent 70%),
+    radial-gradient(35% 35% at 12% 100%,rgba(255,120,110,.28),transparent 70%),
+    #0a0a0b;
+}
+
+/* ============================================================
+   LIQUID GLASS (transparent: background shows through)
    ============================================================ */
 :root{
-  --g1:rgba(255,255,255,.14);
-  --g2:rgba(255,255,255,.04);
-  --gb:rgba(255,255,255,.20);
-  --gh:rgba(255,255,255,.42);      /* top specular edge */
-  --gl:rgba(255,255,255,.06);      /* bottom inner edge */
-  --gs:rgba(0,0,0,.45);            /* drop shadow */
+  --g1:rgba(255,255,255,.10);
+  --g2:rgba(255,255,255,.02);
+  --gb:rgba(255,255,255,.22);
+  --gh:rgba(255,255,255,.45);
+  --gl:rgba(255,255,255,.05);
+  --gs:rgba(0,0,0,.40);
 }
 .light{
-  --g1:rgba(255,255,255,.78);
-  --g2:rgba(255,255,255,.28);
-  --gb:rgba(255,255,255,.95);
-  --gh:rgba(255,255,255,1);
+  --g1:rgba(158,27,36,.07);
+  --g2:rgba(158,27,36,.01);
+  --gb:rgba(158,27,36,.20);
+  --gh:rgba(255,255,255,.9);
   --gl:rgba(158,27,36,.06);
-  --gs:rgba(158,27,36,.28);
+  --gs:rgba(158,27,36,.25);
 }
 
 .btn,
@@ -147,120 +162,73 @@ footer{padding:36px 0;font-size:13px;color:var(--muted)}footer .wrap{display:fle
   position:relative;
   isolation:isolate;
   background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
-  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(10px) saturate(170%);
+  backdrop-filter:blur(10px) saturate(170%);
   border:1px solid var(--gb);
   box-shadow:
     inset 0 1px 0 var(--gh),
     inset 0 -1px 0 var(--gl),
-    inset 0 0 18px rgba(255,255,255,.05),
-    0 10px 28px -14px var(--gs);
+    inset 0 0 14px rgba(255,255,255,.04),
+    0 10px 28px -16px var(--gs);
 }
 
-/* glossy highlight sweep on top half */
-.btn::before,
-.tag::before,
-.chips span::before,
-.val::before,
-.step b::before,
-.edu::before{
-  content:"";
-  position:absolute;inset:0;
-  border-radius:inherit;
-  background:linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 48%);
-  opacity:.55;
-  pointer-events:none;
-  z-index:-1;
+/* soft glossy sheen on the top half */
+.btn::before,.tag::before,.chips span::before,
+.val::before,.step b::before,.edu::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 45%);
+  pointer-events:none;z-index:-1;
 }
 .light .btn::before,.light .tag::before,.light .chips span::before,
-.light .val::before,.light .step b::before,.light .edu::before{opacity:.9}
+.light .val::before,.light .step b::before,.light .edu::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.7) 0%,rgba(255,255,255,0) 50%);
+}
 
-/* text colours that the old solid backgrounds relied on */
 .tag{color:var(--accent-text)}
-.links .btn,.btn{color:var(--ink)}
+.btn{color:var(--ink)}
 
-/* primary button: ruby-tinted glass */
+/* primary button: red-tinted but still see-through */
 .btn.primary{
-  background:linear-gradient(135deg,rgba(214,48,60,.82) 0%,rgba(158,27,36,.55) 100%);
-  border-color:rgba(255,140,148,.55);
+  background:linear-gradient(135deg,rgba(214,48,60,.55) 0%,rgba(158,27,36,.25) 100%);
+  border-color:rgba(255,140,148,.5);
   color:#fff;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 1px 0 rgba(255,255,255,.5),
     inset 0 -1px 0 rgba(0,0,0,.15),
-    inset 0 0 18px rgba(255,255,255,.08),
-    0 12px 30px -12px rgba(158,27,36,.75);
+    inset 0 0 16px rgba(255,255,255,.06),
+    0 12px 30px -14px rgba(158,27,36,.8);
 }
-.btn.primary:hover{
-  background:linear-gradient(135deg,rgba(232,66,78,.9) 0%,rgba(176,34,45,.65) 100%);
-}
+.btn.primary:hover{background:linear-gradient(135deg,rgba(232,66,78,.68) 0%,rgba(176,34,45,.35) 100%)}
 
-/* hover states keep the glass depth */
 .btn:hover{
   transform:translateY(-2px);
   box-shadow:
     inset 0 1px 0 var(--gh),
     inset 0 -1px 0 var(--gl),
-    inset 0 0 22px rgba(255,255,255,.1),
-    0 16px 34px -14px var(--gs);
+    inset 0 0 18px rgba(255,255,255,.07),
+    0 16px 34px -16px var(--gs);
 }
 .btn.primary:hover{
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 1px 0 rgba(255,255,255,.6),
     inset 0 -1px 0 rgba(0,0,0,.15),
-    inset 0 0 22px rgba(255,255,255,.12),
-    0 16px 36px -12px rgba(158,27,36,.85);
+    inset 0 0 18px rgba(255,255,255,.1),
+    0 16px 36px -14px rgba(158,27,36,.9);
 }
 .val:hover{border-color:var(--gb);transform:translateY(-4px)}
-.chips span,.tag{transition:transform .2s,background .2s}
+.chips span,.tag{transition:transform .2s}
 .chips span:hover,.tag:hover{transform:translateY(-1px)}
 
-/* process circles: slightly stronger tint so the number stays crisp */
-.step b{border-color:var(--gb)}
-.step b::after{
-  content:"";position:absolute;inset:-1px;border-radius:50%;
-  border:1px solid rgba(229,86,95,.45);pointer-events:none;
-}
-.light .step b::after{border-color:rgba(158,27,36,.35)}
+/* process circles */
+.step b{border-color:var(--gb);color:var(--accent-text)}
 
-/* CTA band: richer red backdrop so the glass buttons have something to refract */
-.band{
-  background:
-    radial-gradient(60% 90% at 15% 0%,rgba(255,110,120,.45),transparent 65%),
-    radial-gradient(50% 80% at 90% 100%,rgba(60,0,8,.7),transparent 65%),
-    linear-gradient(135deg,#a3202b,#6e1019);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
-}
+/* CTA band buttons: clear glass on the original solid red band */
 .band .btn,.band .btn.ghost{
-  --g1:rgba(255,255,255,.28);--g2:rgba(255,255,255,.08);
-  --gb:rgba(255,255,255,.45);--gh:rgba(255,255,255,.7);--gl:rgba(255,255,255,.1);--gs:rgba(40,0,6,.6);
+  --g1:rgba(255,255,255,.20);--g2:rgba(255,255,255,.04);
+  --gb:rgba(255,255,255,.40);--gh:rgba(255,255,255,.65);--gl:rgba(255,255,255,.08);--gs:rgba(40,0,6,.55);
   color:#fff;
 }
 
-/* soft colour blobs behind glass so the blur has something to bend */
-#about,#value,#process,#experience,#education{position:relative}
-#about{
-  background-image:
-    radial-gradient(40% 60% at 90% 70%,rgba(158,27,36,.30),transparent 70%),
-    radial-gradient(30% 50% at 5% 20%,rgba(229,86,95,.14),transparent 70%);
-}
-#value{
-  background-image:
-    radial-gradient(35% 55% at 12% 20%,rgba(229,86,95,.38),transparent 70%),
-    radial-gradient(40% 60% at 88% 85%,rgba(158,27,36,.30),transparent 70%),
-    radial-gradient(30% 40% at 55% 50%,rgba(255,190,150,.30),transparent 70%);
-}
-#process{
-  background-image:
-    radial-gradient(30% 60% at 20% 50%,rgba(158,27,36,.28),transparent 70%),
-    radial-gradient(30% 60% at 85% 40%,rgba(229,86,95,.16),transparent 70%);
-}
-#education{
-  background-image:
-    radial-gradient(35% 60% at 15% 60%,rgba(229,86,95,.38),transparent 70%),
-    radial-gradient(35% 60% at 85% 30%,rgba(255,190,150,.35),transparent 70%);
-}
-
-/* fallback for browsers without backdrop-filter */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .btn,.tag,.chips span,.val,.step b,.edu{background:var(--surface)}
   .btn.primary{background:var(--accent)}
