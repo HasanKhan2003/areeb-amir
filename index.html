@@ -41,7 +41,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
   display: grid;
   grid-template-columns: 1.25fr 1fr;
   gap: 56px;
-  align-items: flex-end; /* Changed from center to flex-end */
+  align-items: flex-end;
 }
 .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);border:1px solid var(--line);padding:6px 14px;border-radius:999px;background:var(--surface);margin-bottom:28px}
 .dot{width:8px;height:8px;border-radius:50%;background:#e5565f;box-shadow:0 0 0 0 rgba(229,86,95,.6);animation:pulse 2.2s infinite}
@@ -113,6 +113,158 @@ h1 em{color:var(--accent-text);font-style:normal}
 footer{padding:36px 0;font-size:13px;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none}}
+
+/* ============================================================
+   LIQUID GLASS
+   Applies to: buttons, tags, chips, expertise cards,
+   process circles, education card, CTA band buttons.
+   ============================================================ */
+:root{
+  --g1:rgba(255,255,255,.14);
+  --g2:rgba(255,255,255,.04);
+  --gb:rgba(255,255,255,.20);
+  --gh:rgba(255,255,255,.42);      /* top specular edge */
+  --gl:rgba(255,255,255,.06);      /* bottom inner edge */
+  --gs:rgba(0,0,0,.45);            /* drop shadow */
+}
+.light{
+  --g1:rgba(255,255,255,.78);
+  --g2:rgba(255,255,255,.28);
+  --gb:rgba(255,255,255,.95);
+  --gh:rgba(255,255,255,1);
+  --gl:rgba(158,27,36,.06);
+  --gs:rgba(158,27,36,.28);
+}
+
+.btn,
+.tag,
+.chips span,
+.val,
+.step b,
+.edu,
+.band .btn,
+.band .btn.ghost{
+  position:relative;
+  isolation:isolate;
+  background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--gb);
+  box-shadow:
+    inset 0 1px 0 var(--gh),
+    inset 0 -1px 0 var(--gl),
+    inset 0 0 18px rgba(255,255,255,.05),
+    0 10px 28px -14px var(--gs);
+}
+
+/* glossy highlight sweep on top half */
+.btn::before,
+.tag::before,
+.chips span::before,
+.val::before,
+.step b::before,
+.edu::before{
+  content:"";
+  position:absolute;inset:0;
+  border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 48%);
+  opacity:.55;
+  pointer-events:none;
+  z-index:-1;
+}
+.light .btn::before,.light .tag::before,.light .chips span::before,
+.light .val::before,.light .step b::before,.light .edu::before{opacity:.9}
+
+/* text colours that the old solid backgrounds relied on */
+.tag{color:var(--accent-text)}
+.links .btn,.btn{color:var(--ink)}
+
+/* primary button: ruby-tinted glass */
+.btn.primary{
+  background:linear-gradient(135deg,rgba(214,48,60,.82) 0%,rgba(158,27,36,.55) 100%);
+  border-color:rgba(255,140,148,.55);
+  color:#fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(0,0,0,.15),
+    inset 0 0 18px rgba(255,255,255,.08),
+    0 12px 30px -12px rgba(158,27,36,.75);
+}
+.btn.primary:hover{
+  background:linear-gradient(135deg,rgba(232,66,78,.9) 0%,rgba(176,34,45,.65) 100%);
+}
+
+/* hover states keep the glass depth */
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 var(--gh),
+    inset 0 -1px 0 var(--gl),
+    inset 0 0 22px rgba(255,255,255,.1),
+    0 16px 34px -14px var(--gs);
+}
+.btn.primary:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 -1px 0 rgba(0,0,0,.15),
+    inset 0 0 22px rgba(255,255,255,.12),
+    0 16px 36px -12px rgba(158,27,36,.85);
+}
+.val:hover{border-color:var(--gb);transform:translateY(-4px)}
+.chips span,.tag{transition:transform .2s,background .2s}
+.chips span:hover,.tag:hover{transform:translateY(-1px)}
+
+/* process circles: slightly stronger tint so the number stays crisp */
+.step b{border-color:var(--gb)}
+.step b::after{
+  content:"";position:absolute;inset:-1px;border-radius:50%;
+  border:1px solid rgba(229,86,95,.45);pointer-events:none;
+}
+.light .step b::after{border-color:rgba(158,27,36,.35)}
+
+/* CTA band: richer red backdrop so the glass buttons have something to refract */
+.band{
+  background:
+    radial-gradient(60% 90% at 15% 0%,rgba(255,110,120,.45),transparent 65%),
+    radial-gradient(50% 80% at 90% 100%,rgba(60,0,8,.7),transparent 65%),
+    linear-gradient(135deg,#a3202b,#6e1019);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
+}
+.band .btn,.band .btn.ghost{
+  --g1:rgba(255,255,255,.28);--g2:rgba(255,255,255,.08);
+  --gb:rgba(255,255,255,.45);--gh:rgba(255,255,255,.7);--gl:rgba(255,255,255,.1);--gs:rgba(40,0,6,.6);
+  color:#fff;
+}
+
+/* soft colour blobs behind glass so the blur has something to bend */
+#about,#value,#process,#experience,#education{position:relative}
+#about{
+  background-image:
+    radial-gradient(40% 60% at 90% 70%,rgba(158,27,36,.30),transparent 70%),
+    radial-gradient(30% 50% at 5% 20%,rgba(229,86,95,.14),transparent 70%);
+}
+#value{
+  background-image:
+    radial-gradient(35% 55% at 12% 20%,rgba(229,86,95,.38),transparent 70%),
+    radial-gradient(40% 60% at 88% 85%,rgba(158,27,36,.30),transparent 70%),
+    radial-gradient(30% 40% at 55% 50%,rgba(255,190,150,.30),transparent 70%);
+}
+#process{
+  background-image:
+    radial-gradient(30% 60% at 20% 50%,rgba(158,27,36,.28),transparent 70%),
+    radial-gradient(30% 60% at 85% 40%,rgba(229,86,95,.16),transparent 70%);
+}
+#education{
+  background-image:
+    radial-gradient(35% 60% at 15% 60%,rgba(229,86,95,.38),transparent 70%),
+    radial-gradient(35% 60% at 85% 30%,rgba(255,190,150,.35),transparent 70%);
+}
+
+/* fallback for browsers without backdrop-filter */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .btn,.tag,.chips span,.val,.step b,.edu{background:var(--surface)}
+  .btn.primary{background:var(--accent)}
+}
 </style>
 </head>
 <body>
