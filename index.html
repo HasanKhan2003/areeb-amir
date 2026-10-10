@@ -36,7 +36,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .links .btn{padding:8px 16px;font-size:14px;color:var(--ink)}
 @media(max-width:720px){.links a:not(.btn){display:none}}
 /* hero */
-.hero{padding:88px 0 72px;background:radial-gradient(60% 50% at 85% 0%,rgba(158,27,36,.28),transparent 70%)}
+.hero{padding:88px 0 72px;background:radial-gradient(60% 50% at 85% 0%,rgba(158,27,36,.12),transparent 70%)}
 .hero .wrap {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
@@ -50,7 +50,7 @@ h1{font-size:clamp(44px,7vw,76px);margin-bottom:24px}
 h1 em{color:var(--accent-text);font-style:normal}
 .lead{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:34px}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 30px 60px -30px rgba(158,27,36,.35)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 30px 60px -30px rgba(158,27,36,.2)}
 .id{display:flex;align-items:center;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:20px}
 .avatar{
   width:90px;
@@ -116,39 +116,37 @@ footer{padding:36px 0;font-size:13px;color:var(--muted)}footer .wrap{display:fle
 
 /* ============================================================
    FIXED GRADIENT BACKGROUND (dark areas only)
-   The gradient stays put while content scrolls over it, so the
-   glass elements pick up different colours as you scroll.
-   White sections keep their solid white background.
+   Red glow toned down: smaller, softer blobs on mostly black.
    ============================================================ */
 body::before{
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(45% 40% at 88% 8%,rgba(190,30,42,.70),transparent 70%),
-    radial-gradient(38% 38% at 8% 38%,rgba(229,86,95,.38),transparent 70%),
-    radial-gradient(34% 34% at 50% 62%,rgba(120,18,28,.55),transparent 70%),
-    radial-gradient(50% 45% at 85% 95%,rgba(190,30,42,.55),transparent 70%),
-    radial-gradient(35% 35% at 12% 100%,rgba(255,120,110,.28),transparent 70%),
+    radial-gradient(38% 32% at 88% 8%,rgba(190,30,42,.30),transparent 70%),
+    radial-gradient(32% 30% at 8% 38%,rgba(229,86,95,.12),transparent 70%),
+    radial-gradient(28% 28% at 50% 62%,rgba(120,18,28,.22),transparent 70%),
+    radial-gradient(40% 36% at 85% 95%,rgba(190,30,42,.22),transparent 70%),
+    radial-gradient(28% 28% at 12% 100%,rgba(255,120,110,.09),transparent 70%),
     #0a0a0b;
 }
 
 /* ============================================================
-   LIQUID GLASS (transparent: background shows through)
+   LIQUID GLASS (more transparent: background shows through)
    ============================================================ */
 :root{
-  --g1:rgba(255,255,255,.10);
-  --g2:rgba(255,255,255,.02);
-  --gb:rgba(255,255,255,.22);
-  --gh:rgba(255,255,255,.45);
-  --gl:rgba(255,255,255,.05);
-  --gs:rgba(0,0,0,.40);
+  --g1:rgba(255,255,255,.04);
+  --g2:rgba(255,255,255,.005);
+  --gb:rgba(255,255,255,.14);
+  --gh:rgba(255,255,255,.28);
+  --gl:rgba(255,255,255,.03);
+  --gs:rgba(0,0,0,.35);
 }
 .light{
-  --g1:rgba(158,27,36,.07);
-  --g2:rgba(158,27,36,.01);
-  --gb:rgba(158,27,36,.20);
-  --gh:rgba(255,255,255,.9);
-  --gl:rgba(158,27,36,.06);
-  --gs:rgba(158,27,36,.25);
+  --g1:rgba(158,27,36,.03);
+  --g2:rgba(158,27,36,0);
+  --gb:rgba(158,27,36,.12);
+  --gh:rgba(255,255,255,.7);
+  --gl:rgba(158,27,36,.03);
+  --gs:rgba(158,27,36,.2);
 }
 
 .btn,
@@ -168,7 +166,7 @@ body::before{
   box-shadow:
     inset 0 1px 0 var(--gh),
     inset 0 -1px 0 var(--gl),
-    inset 0 0 14px rgba(255,255,255,.04),
+    inset 0 0 14px rgba(255,255,255,.02),
     0 10px 28px -16px var(--gs);
 }
 
@@ -176,44 +174,44 @@ body::before{
 .btn::before,.tag::before,.chips span::before,
 .val::before,.step b::before,.edu::before{
   content:"";position:absolute;inset:0;border-radius:inherit;
-  background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 45%);
+  background:linear-gradient(180deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 45%);
   pointer-events:none;z-index:-1;
 }
 .light .btn::before,.light .tag::before,.light .chips span::before,
 .light .val::before,.light .step b::before,.light .edu::before{
-  background:linear-gradient(180deg,rgba(255,255,255,.7) 0%,rgba(255,255,255,0) 50%);
+  background:linear-gradient(180deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
 }
 
 .tag{color:var(--accent-text)}
 .btn{color:var(--ink)}
 
-/* primary button: red-tinted but still see-through */
+/* primary button: red-tinted but clearly see-through */
 .btn.primary{
-  background:linear-gradient(135deg,rgba(214,48,60,.55) 0%,rgba(158,27,36,.25) 100%);
-  border-color:rgba(255,140,148,.5);
+  background:linear-gradient(135deg,rgba(214,48,60,.35) 0%,rgba(158,27,36,.12) 100%);
+  border-color:rgba(255,140,148,.4);
   color:#fff;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 1px 0 rgba(255,255,255,.4),
     inset 0 -1px 0 rgba(0,0,0,.15),
-    inset 0 0 16px rgba(255,255,255,.06),
-    0 12px 30px -14px rgba(158,27,36,.8);
+    inset 0 0 16px rgba(255,255,255,.03),
+    0 12px 30px -14px rgba(158,27,36,.6);
 }
-.btn.primary:hover{background:linear-gradient(135deg,rgba(232,66,78,.68) 0%,rgba(176,34,45,.35) 100%)}
+.btn.primary:hover{background:linear-gradient(135deg,rgba(232,66,78,.45) 0%,rgba(176,34,45,.2) 100%)}
 
 .btn:hover{
   transform:translateY(-2px);
   box-shadow:
     inset 0 1px 0 var(--gh),
     inset 0 -1px 0 var(--gl),
-    inset 0 0 18px rgba(255,255,255,.07),
+    inset 0 0 18px rgba(255,255,255,.04),
     0 16px 34px -16px var(--gs);
 }
 .btn.primary:hover{
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.6),
+    inset 0 1px 0 rgba(255,255,255,.5),
     inset 0 -1px 0 rgba(0,0,0,.15),
-    inset 0 0 18px rgba(255,255,255,.1),
-    0 16px 36px -14px rgba(158,27,36,.9);
+    inset 0 0 18px rgba(255,255,255,.05),
+    0 16px 36px -14px rgba(158,27,36,.7);
 }
 .val:hover{border-color:var(--gb);transform:translateY(-4px)}
 .chips span,.tag{transition:transform .2s}
@@ -224,8 +222,8 @@ body::before{
 
 /* CTA band buttons: clear glass on the original solid red band */
 .band .btn,.band .btn.ghost{
-  --g1:rgba(255,255,255,.20);--g2:rgba(255,255,255,.04);
-  --gb:rgba(255,255,255,.40);--gh:rgba(255,255,255,.65);--gl:rgba(255,255,255,.08);--gs:rgba(40,0,6,.55);
+  --g1:rgba(255,255,255,.10);--g2:rgba(255,255,255,.01);
+  --gb:rgba(255,255,255,.30);--gh:rgba(255,255,255,.50);--gl:rgba(255,255,255,.05);--gs:rgba(40,0,6,.5);
   color:#fff;
 }
 
